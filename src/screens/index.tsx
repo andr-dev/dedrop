@@ -16,7 +16,7 @@ const routes: RouteProps[] = [
 export default (
     <>
         {routes.map((route) => (
-            <Route key={route.path} {...route} />
+            <Route key={route.path ?? ""} {...route} />
         ))}
     </>
 );

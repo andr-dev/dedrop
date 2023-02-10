@@ -1,0 +1,13 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Manrope", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    outline: none;
+}
+
+html,
+body {
+    margin: 0;
+    outline: none;
+}

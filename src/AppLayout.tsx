@@ -1,27 +1,25 @@
+import React from "react";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+import Loader from "./components/loader";
+import Flex from "./ui/flex";
 
 export function AppLayout() {
+    const loader = <Loader />;
+
     return (
-        <div
-            // className={clsx(
-            //     // App level styles
-            //     'flex h-screen overflow-hidden text-ink select-none cursor-default',
-            //     os === 'browser' && 'bg-app border-t border-app-line/50',
-            //     os === 'macOS' && 'rounded-[10px] has-blur-effects',
-            //     os !== 'browser' && os !== 'windows' && 'border border-app-frame'
-            // )}
-            onContextMenu={(e) => {
-                // TODO: allow this on some UI text at least / disable default browser context menu
-                e.preventDefault();
-                return false;
-            }}
-        >
-            <div className="relative flex w-full">
+        <React.Suspense fallback={loader}>
+            <AppWindow>
                 <Suspense fallback={<div className="w-screen h-screen bg-app" />}>
                     <Outlet />
                 </Suspense>
-            </div>
-        </div>
+            </AppWindow>
+        </React.Suspense>
     );
 }
+
+const AppWindow = styled(Flex)`
+    height: 100vh;
+    width: 100vw;
+`;
