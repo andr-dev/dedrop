@@ -12,15 +12,19 @@ export default function ReceiveScreen() {
 
   let { streamrClient } = useContext(appContext).state;
 
+  const updateFiles = () => {
+    invoke("get_files").then((files) => {
+      console.log(files);
+      setFiles(files as any[][]);
+    })
+  }
+
   useEffect(() => {
     invoke("filter_contacts", { "filter": "" }).then((contacts) => {
       setContacts(Object.entries(contacts as Contacts));
     });
 
-    invoke("get_files").then((files) => {
-      console.log(files);
-      setFiles(files as any[][]);
-    })
+    updateFiles();
   }, []);
 
   useEffect(() => {
@@ -39,6 +43,7 @@ export default function ReceiveScreen() {
             console.log("payload", payload)
             invoke("save_file", { publicKey: publicKey, payload: JSON.stringify(payload) }).then(() => {
               console.log("saved file!");
+              updateFiles();
             })
           })
         }
