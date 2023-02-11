@@ -1,12 +1,12 @@
 import { Box, ButtonBase, Stack, Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Suspense } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import SendIcon from "@mui/icons-material/Send";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 
-import Logo from "./assets/logo.png";
+import Logo from "./assets/logo.svg";
 
 interface SideBarProps {
   label: string;
@@ -32,6 +32,7 @@ function SideBarItem(props: SideBarProps) {
 }
 
 function SideBar() {
+
   return (
     <Box width="100%" height="100%">
       <Box
@@ -43,7 +44,7 @@ function SideBar() {
         role="presentation"
       >
         <Stack>
-          <img style={{ margin: 12 }} src={Logo} />
+          <img style={{ margin: 16, marginTop: 8 }} src={Logo} />
           <SideBarItem label="Login" icon={<SendIcon />} />
           <SideBarItem label="Send" icon={<SendIcon />} />
           <SideBarItem label="Receive" icon={<SystemUpdateAltIcon />} />
@@ -71,7 +72,8 @@ export function AppLayout() {
         <div
           style={{
             display: "flex",
-            width: 128,
+            width: 96,
+            minWidth: 96,
             height: "100%",
             padding: 20,
             paddingRight: 0,
