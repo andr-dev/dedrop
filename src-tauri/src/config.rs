@@ -52,4 +52,29 @@ impl Config {
 
         Ok(config)
     }
+
+    pub fn add_contact(&mut self, name: String, stream: String) -> Result<(), Error> {
+        self.contacts.insert(name, stream);
+
+        self.sync()
+    }
+
+    fn sync(&mut self) -> Result<(), Error> {
+        let config_path_buf = dirs::config_dir()
+            .ok_or(Error::InvalidConfigDir)?
+            .join(std::path::Path::new("airdrop"));
+
+        let config_dir_path = config_path_buf.as_path();
+
+        let config_file_buf = config_path_buf.join(std::path::Path::new("airdrop.json"));
+        let config_file_path = config_file_buf.as_path();
+
+        std::fs::create_dir_all(config_dir_path)?;
+
+        let mut config_file = std::fs::File::create(config_file_path)?;
+
+        config_file.write(serde_json::to_string(&self)?.as_bytes())?;
+
+        Ok(())
+    }
 }
