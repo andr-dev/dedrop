@@ -28,6 +28,7 @@ fn main() {
             get_private_key,
             filter_contacts,
             add_contact,
+            del_contact
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -107,4 +108,12 @@ async fn add_contact(
     name: String,
 ) -> Result<(), Error> {
     state.write().await.add_contact(public_key, name)
+}
+
+#[tauri::command]
+async fn del_contact(
+    state: State<'_, RwLock<Config>>,
+    public_key: String,
+) -> Result<(), Error> {
+    state.write().await.del_contact(public_key)
 }

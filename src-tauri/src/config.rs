@@ -71,6 +71,11 @@ impl Config {
         self.sync()
     }
 
+    pub fn del_contact(&mut self, public_key: String) -> Result<(), Error> {
+        self.contacts.remove(&public_key);
+        self.sync()
+    }
+
     pub fn add_file(&mut self, public_key: &str, filename: &str) -> Result<(), Error> {
         let contact = self
             .contacts
