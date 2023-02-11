@@ -3,6 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "@fontsource/rubik";
 
 export const UserCard = ({ name }: { name: string }) => (
+  <div style={{ paddingBottom: "12px" }}>
   <Card sx={{ background: "#222B3A", borderRadius: "20px" }}>
     <CardContent>
       <Grid container spacing={2}>
@@ -34,4 +35,5 @@ export const UserCard = ({ name }: { name: string }) => (
       </Grid>{" "}
     </CardContent>
   </Card>
+  </div>
 );
