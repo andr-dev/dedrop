@@ -12,7 +12,7 @@ const routes: RouteProps[] = [
     { path: 'overview', element: <Overview /> },
     { path: 'send', element: <Send /> },
     { path: 'receive', element: <Receive /> },
-    { path: 'contacts', element: <Contacts /> }
+    { path: 'contacts', element: <Contacts />}
 ];
 
 export default (
