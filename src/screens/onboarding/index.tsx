@@ -36,8 +36,6 @@ export const ONBOARDING_SCREENS: OnboardingScreen[] = [
 
 export default function OnboardingRoot() {
 	return (
-		<div>
-			onboarding root
-		</div>
+		<Container maxWidth="sm"></Container>
 	);
 }

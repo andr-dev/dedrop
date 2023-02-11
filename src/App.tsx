@@ -1,17 +1,26 @@
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from "styled-components"
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AppLayout } from './AppLayout';
+import screens from './screens';
+import NotFound from './screens/NotFound';
+import OnboardingRoot, { ONBOARDING_SCREENS } from './screens/onboarding';
 
-import { AppRouter } from './AppRouter';
-import theme from "./styles/theme";
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="onboarding" element={<OnboardingRoot />}>
+                    <Route index element={<Navigate to="start" />} />
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
-    </ThemeProvider>
-  );
+                    {ONBOARDING_SCREENS.map(({ key, component: ScreenComponent }, index) => (
+                        <Route key={key} path={key} element={<ScreenComponent />} />
+                    ))}
+                </Route>
+
+                <Route element={<AppLayout />}>
+                    {screens}
+                    <Route path="*" element={<NotFound />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
-
-export default App;

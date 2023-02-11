@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@radix-ui/react-popover": "1.0.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.8",
     "@tauri-apps/api": "^1.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -45,8 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.3",
-    "@types/styled-components": "^5.1.26",
-    "styled-components": "^5.3.6"
+    "@tauri-apps/cli": "^1.2.3"
   }
 }
