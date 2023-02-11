@@ -40,11 +40,11 @@ impl Config {
     pub fn new() -> Result<Self, Error> {
         let config_path_buf = dirs::config_dir()
             .ok_or(Error::InvalidConfigDir)?
-            .join(std::path::Path::new("airdrop"));
+            .join(std::path::Path::new("dedrop"));
 
         let config_dir_path = config_path_buf.as_path();
 
-        let config_file_buf = config_path_buf.join(std::path::Path::new("airdrop.json"));
+        let config_file_buf = config_path_buf.join(std::path::Path::new("dedrop.json"));
         let config_file_path = config_file_buf.as_path();
 
         if !config_dir_path.exists() {
@@ -105,11 +105,11 @@ impl Config {
     fn sync(&mut self) -> Result<(), Error> {
         let config_path_buf = dirs::config_dir()
             .ok_or(Error::InvalidConfigDir)?
-            .join(std::path::Path::new("airdrop"));
+            .join(std::path::Path::new("dedrop"));
 
         let config_dir_path = config_path_buf.as_path();
 
-        let config_file_buf = config_path_buf.join(std::path::Path::new("airdrop.json"));
+        let config_file_buf = config_path_buf.join(std::path::Path::new("dedrop.json"));
         let config_file_path = config_file_buf.as_path();
 
         std::fs::create_dir_all(config_dir_path)?;

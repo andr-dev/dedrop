@@ -50,7 +50,7 @@ export default function OnboardingPrivateKey({
             style={{ textAlign: "center", fontFamily: "Rubik" }}
             pt={4}
           >
-            Airdrop
+            Dedrop
           </Typography>
           <Typography
             variant="subtitle1"

@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
-pub struct AirdropMessage {
+pub struct DedropMessage {
     pub filename: String,
     pub contents: Vec<u8>,
 }

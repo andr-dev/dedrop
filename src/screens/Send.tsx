@@ -106,7 +106,7 @@ export default function SendScreen() {
                     .then((file) =>
                       context.state.streamrClient
                         .getOrCreateStream({
-                          id: "/foo/bar",
+                          id: "/dedrop",
                         })
                         .then((stream) => {
                           stream.publish(file).then((res) => handleClick(res));
@@ -126,7 +126,7 @@ export default function SendScreen() {
               Simple, private & decentralized
             </Typography>
             <Typography variant="h6">
-              Airdrop let's you share files with end-to-end entryption so you
+              Dedrop let's you share files with end-to-end entryption so you
               can keep what you share private and make sure your stuff doesn't
               stay online forever.
             </Typography>

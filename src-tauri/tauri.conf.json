@@ -7,7 +7,7 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "airdrop",
+    "productName": "dedrop",
     "version": "0.1.0"
   },
   "tauri": {
@@ -36,7 +36,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.airdrop.dev",
+      "identifier": "com.dedrop.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -63,10 +63,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 720,
+        "height": 540,
         "resizable": false,
-        "title": "airdrop",
-        "width": 1280
+        "title": "Dedrop",
+        "width": 1080
       }
     ]
   }

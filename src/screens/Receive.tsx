@@ -39,7 +39,7 @@ export default function ReceiveScreen() {
       for (let [publicKey, name] of contacts) {
         if (!subscriptions.some((x) => x.streamPartId.startsWith(publicKey))) {
           console.log("subscribing to ", publicKey);
-          streamrClient.subscribe({ streamId: `${publicKey}/foo/bar` }, (payload) => {
+          streamrClient.subscribe({ streamId: `${publicKey}/dedrop` }, (payload) => {
             console.log("payload", payload)
             invoke("save_file", { publicKey: publicKey, payload: JSON.stringify(payload) }).then(() => {
               console.log("saved file!");

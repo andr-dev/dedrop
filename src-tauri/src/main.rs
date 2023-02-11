@@ -6,7 +6,7 @@
 mod proto;
 use std::collections::HashMap;
 
-use proto::AirdropMessage;
+use proto::DedropMessage;
 
 mod error;
 use error::Error;
@@ -36,7 +36,7 @@ fn main() {
 }
 
 #[tauri::command]
-async fn load_file(path: &str) -> Result<AirdropMessage, Error> {
+async fn load_file(path: &str) -> Result<DedropMessage, Error> {
     let path = std::path::Path::new(path);
 
     let filename = opt_os_str_to_string(path.file_name())?;
@@ -46,7 +46,7 @@ async fn load_file(path: &str) -> Result<AirdropMessage, Error> {
     let mut contents = vec![];
     file.read_to_end(&mut contents).await?;
 
-    Ok(AirdropMessage { filename, contents })
+    Ok(DedropMessage { filename, contents })
 }
 
 #[tauri::command]
@@ -55,7 +55,7 @@ async fn save_file(
     public_key: &str,
     payload: &str,
 ) -> Result<(), Error> {
-    let msg: AirdropMessage = serde_json::from_str(payload)?;
+    let msg: DedropMessage = serde_json::from_str(payload)?;
 
     state
         .write()
@@ -64,7 +64,7 @@ async fn save_file(
 
     let msg_dir_buf = dirs::download_dir()
         .ok_or(Error::InvalidConfigDir)?
-        .join("airdrop");
+        .join("dedrop");
     let msg_dir = msg_dir_buf.as_path();
 
     std::fs::create_dir_all(msg_dir)?;
