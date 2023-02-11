@@ -8,9 +8,9 @@ const routes: RouteProps[] = [
         index: true,
         element: <Navigate to="overview" relative="route" />
     },
-    { path: 'overview', element: Overview() },
-    { path: 'send', element: Send() },
-    { path: 'receive', element: Receive() },
+    { path: 'overview', element: <Overview /> },
+    { path: 'send', element: <Send /> },
+    { path: 'receive', element: <Receive /> },
 ];
 
 export default (

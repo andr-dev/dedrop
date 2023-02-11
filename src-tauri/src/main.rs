@@ -17,7 +17,7 @@ use config::Config;
 use tokio::io::AsyncReadExt;
 
 fn main() {
-    let config = Config::new().unwrap_or_else(|_| panic!("invalid config"));
+    let config = Config::new().unwrap_or_else(|e| panic!("invalid config, reason: {:?}", e));
 
     tauri::Builder::default()
         .manage(config)
