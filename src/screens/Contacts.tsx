@@ -39,7 +39,7 @@ export default function ContactsScreen() {
           </Button>
         </Stack>
 
-        <List style={{ maxHeight: '100%', overflow: 'auto' }}>
+        <List style={{ maxHeight: '600px', overflow: 'auto' }}>
           {contacts.map(([name, publicKey], value) => <Button key={publicKey} onClick={() => {
             setCurrentContactIdx(value)
             console.log(currentContactIdx)
@@ -49,17 +49,16 @@ export default function ContactsScreen() {
         </List>
       </Stack>
 
-      {currentContactIdx !== undefined && 
-        <ContactCard 
-          name={contacts[currentContactIdx][0]} 
+      {currentContactIdx !== undefined &&
+        <ContactCard
+          name={contacts[currentContactIdx][0]}
           address={contacts[currentContactIdx][1]}
         />}
 
-      {currentContactIdx === undefined && <ContactCard 
-          name=""
-          address=""
-        />}
+      {currentContactIdx === undefined && <ContactCard
+        name=""
+        address=""
+      />}
+    </Stack>)
 
-    </Stack>
-  );
 }

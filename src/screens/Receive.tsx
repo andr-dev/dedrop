@@ -30,7 +30,8 @@ export default function ReceiveScreen() {
         if (!subscriptions.some((x) => x.streamPartId.startsWith(value))) {
           console.log("subscribing to ", value);
           streamrClient.subscribe({ streamId: `${value}/foo/bar` }, (payload) => {
-            invoke("save_file", { data: payload as string }).then(() => {
+            console.log("payload", payload)
+            invoke("save_file", { payload: JSON.stringify(payload) }).then(() => {
               console.log("saved file!");
             })
           })

@@ -51,7 +51,7 @@ async fn load_file(path: &str) -> Result<AirdropMessage, Error> {
 async fn save_file(payload: &str) -> Result<(), Error> {
     let msg: AirdropMessage = serde_json::from_str(payload)?;
 
-    let msg_dir_buf = dirs::data_local_dir().ok_or(Error::InvalidConfigDir)?;
+    let msg_dir_buf = dirs::download_dir().ok_or(Error::InvalidConfigDir)?.join("airdrop");
     let msg_dir = msg_dir_buf.as_path();
 
     std::fs::create_dir_all(msg_dir)?;
