@@ -27,7 +27,7 @@ fn main() {
             save_file,
             get_private_key,
             filter_contacts,
-            add_contact
+            add_contact,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -48,10 +48,18 @@ async fn load_file(path: &str) -> Result<AirdropMessage, Error> {
 }
 
 #[tauri::command]
-async fn save_file(payload: &str) -> Result<(), Error> {
+async fn save_file(
+    state: State<'_, RwLock<Config>>,
+    public_key: &str,
+    payload: &str,
+) -> Result<(), Error> {
     let msg: AirdropMessage = serde_json::from_str(payload)?;
 
-    let msg_dir_buf = dirs::download_dir().ok_or(Error::InvalidConfigDir)?.join("airdrop");
+    state.write().await.add_file(public_key, &msg.filename)?;
+
+    let msg_dir_buf = dirs::download_dir()
+        .ok_or(Error::InvalidConfigDir)?
+        .join("airdrop");
     let msg_dir = msg_dir_buf.as_path();
 
     std::fs::create_dir_all(msg_dir)?;
@@ -88,15 +96,15 @@ async fn filter_contacts(
         .contacts
         .iter()
         .filter(|(key, _)| key.contains(&filter))
-        .map(|(key, value)| (key.clone(), value.clone()))
+        .map(|(key, value)| (key.clone(), value.name.clone()))
         .collect())
 }
 
 #[tauri::command]
 async fn add_contact(
     state: State<'_, RwLock<Config>>,
+    public_key: String,
     name: String,
-    stream: String,
 ) -> Result<(), Error> {
-    state.write().await.add_contact(name, stream)
+    state.write().await.add_contact(public_key, name)
 }

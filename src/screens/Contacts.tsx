@@ -1,28 +1,32 @@
-import { Box, Container, Grid, List, Stack, TextField } from "@mui/material";
+import { Grid, List, ListItem, Stack, TextField } from "@mui/material";
 import { UserCard } from "./receive/UserCard";
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { invoke } from "@tauri-apps/api";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { AddCircle, UndoRounded } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material";
 import ContactCard from "./contacts/ContactCard";
 
 export type Contacts = Map<string, string>;
 
 export default function ContactsScreen() {
   let [contacts, setContacts] = useState<string[][]>([]);
-  let [currentContactIdx, setCurrentContactIdx] = useState<number>();
+  let [currentContactIdx, setCurrentContactIdx] = useState<number | null | undefined>();
 
-  useEffect(() => {
-    invoke("filter_contacts", { "filter": "" }).then((val) => {
+  const fetchContacts = () => {
+    return invoke("filter_contacts", { "filter": "" }).then((val) => {
+      console.log("got contacts", val);
       setContacts(Object.entries(val as Contacts));
     });
+  }
+
+  useEffect(() => {
+    fetchContacts();
   }, []);
 
   return (
-    <Stack direction="row" columnGap={2}>
-      <Stack spacing={2}>
-        <Stack direction="row">
+    <Grid container height="100%" width="100%" columnSpacing={4}>
+      <Grid item xs={currentContactIdx === undefined ? 12 : 6}>
+        <Stack spacing={2} direction="row">
           <TextField
             fullWidth
             id="address-or-contact"
@@ -32,7 +36,7 @@ export default function ContactsScreen() {
             style={{ background: "#222B3A", borderWidth: "0px" }}
           ></TextField>
           <Button onClick={() => {
-            setCurrentContactIdx(undefined)
+            setCurrentContactIdx(currentContactIdx === null ? undefined : null)
             console.log(currentContactIdx)
           }}>
             <AddCircle></AddCircle>
@@ -40,25 +44,45 @@ export default function ContactsScreen() {
         </Stack>
 
         <List style={{ maxHeight: '600px', overflow: 'auto' }}>
-          {contacts.map(([name, publicKey], value) => <Button key={publicKey} onClick={() => {
-            setCurrentContactIdx(value)
-            console.log(currentContactIdx)
-          }}>
-            <UserCard name={name} />
-          </Button>)}
+          {contacts.map(([publicKey, name], value) => (
+            <ListItem style={{ padding: 0 }}><Button key={publicKey} onClick={() => {
+              setCurrentContactIdx(value);
+            }} fullWidth>
+              <UserCard name={name} publicKey={publicKey} />
+            </Button></ListItem>
+          ))}
         </List>
-      </Stack>
-
-      {currentContactIdx !== undefined &&
-        <ContactCard
-          name={contacts[currentContactIdx][0]}
-          address={contacts[currentContactIdx][1]}
-        />}
-
-      {currentContactIdx === undefined && <ContactCard
-        name=""
-        address=""
-      />}
-    </Stack>)
+      </Grid>
+      {
+        currentContactIdx !== undefined ? (
+          <Grid item xs={currentContactIdx === undefined ? 12 : 6}>
+            {
+              currentContactIdx !== null ?
+                <ContactCard
+                  key={contacts[currentContactIdx][0]}
+                  address={contacts[currentContactIdx][0]}
+                  name={contacts[currentContactIdx][1]}
+                  onSubmit={(public_key, name) => {
+                    let idx = currentContactIdx;
+                    setCurrentContactIdx(undefined);
+                    invoke("add_contact", { "publicKey": public_key, "name": name }).then(() => fetchContacts()).then(() => {
+                      setCurrentContactIdx(idx);
+                    })
+                  }}
+                /> : <ContactCard
+                  key="contactCreate"
+                  address=""
+                  name=""
+                  create
+                  onSubmit={(public_key, name) => {
+                    setCurrentContactIdx(undefined);
+                    invoke("add_contact", { "publicKey": public_key, "name": name }).then(() => fetchContacts());
+                  }}
+                />
+            }
+          </Grid>
+        ) : null
+      }
+    </Grid >)
 
 }

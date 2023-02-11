@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Stack, TextField } from "@mui/material";
+import { Box, Container, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { UserCard } from "./receive/UserCard";
 import { FileCard } from "./receive/FileCard";
 import { useContext, useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { Contacts } from "./Contacts";
 
 export default function ReceiveScreen() {
   let [contacts, setContacts] = useState<string[][]>([]);
+  let [files, setFiles] = useState<string[][]>([]);
 
   let { streamrClient } = useContext(appContext).state;
 
@@ -41,31 +42,42 @@ export default function ReceiveScreen() {
   }, [contacts]);
 
   return (
-    <Grid container height="100%" width="100%" columnSpacing={4}>
-      <Grid item xs={6}>
-        <Box>
-          <Stack spacing={2}>
-            <TextField
-              fullWidth
-              id="address-or-contact"
-              label="Search for an address or contact"
-              variant="outlined"
-              size="small"
-              style={{
-                background: "#222B3A",
-                borderWidth: "0px",
-                fontFamily: "Rubik",
-              }}
-            ></TextField>
-            {contacts.map(([name, publicKey], value) => <UserCard key={publicKey} name={name} />)}
-          </Stack>
-        </Box>
-      </Grid>
-      <Grid item xs={6}>
-        <Box>
-          <FileCard />
-        </Box>
-      </Grid>
-    </Grid>
+    <Stack sx={{ height: "100%", width: "100%" }} spacing={2} >
+      <Stack spacing={2} direction="row">
+        <TextField
+          fullWidth
+          id="address-or-contact"
+          label="Search for an address or contact"
+          variant="outlined"
+          size="small"
+          style={{ background: "#222B3A", borderWidth: "0px" }}
+        ></TextField>
+      </Stack>
+      <TableContainer component={Paper}>
+        <Table >
+          <TableHead>
+            <TableRow>
+              <TableCell>Filename</TableCell>
+              <TableCell align="right">Sender</TableCell>
+              <TableCell align="right">Size</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[].map((row: any) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Stack>
   );
 }

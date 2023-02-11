@@ -14,6 +14,9 @@ pub enum Error {
 
     #[error("invalid data dir")]
     InvalidDataDir,
+
+    #[error("missing contact")]
+    MissingContact,
 }
 
 impl serde::Serialize for Error {

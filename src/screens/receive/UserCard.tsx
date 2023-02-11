@@ -1,39 +1,28 @@
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "@fontsource/rubik";
 
-export const UserCard = ({ name }: { name: string }) => (
-  <div style={{ paddingBottom: "12px" }}>
-  <Card sx={{ background: "#222B3A", borderRadius: "20px" }}>
-    <CardContent>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <AccountCircleIcon
-            style={{
-              marginLeft: "10%",
-              marginTop: "10%",
-              transform: "scale(2.4)",
-            }}
-          ></AccountCircleIcon>
-        </Grid>
-        <Grid item xs={8} style={{ margin: "auto" }}>
-          <Typography
-            sx={{ fontSize: 25, fontFamily: "Rubik" }}
-            color="text.secondary"
-            gutterBottom
-          >
-            {name}
-          </Typography>
-          <Typography
-            sx={{ fontSize: 15, fontFamily: "Rubik" }}
-            color="text.secondary"
-            gutterBottom
-          >
-            Received at 12:01 PM EST
-          </Typography>
-        </Grid>
-      </Grid>{" "}
-    </CardContent>
-  </Card>
-  </div>
+export const UserCard = ({ name, publicKey }: { name: string, publicKey: string }) => (
+  <Box sx={{ background: "#222B3A", borderRadius: "20px", width: "100%" }} p={2}>
+    <Stack direction="row" spacing={2} display="flex" alignItems="center">
+      <AccountCircleIcon
+        fontSize="large"
+        style={{
+          color: "#FFFFFF"
+        }}
+      ></AccountCircleIcon>
+      <Typography
+        sx={{ fontSize: 25, fontFamily: "Rubik" }}
+        color="text.secondary"
+      >
+        {name}
+      </Typography>
+      <Typography
+        sx={{ fontSize: 15, fontFamily: "Rubik" }}
+        color="text.secondary"
+      >
+        0x{publicKey}
+      </Typography>
+    </Stack>
+  </Box>
 );

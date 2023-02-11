@@ -2,41 +2,37 @@ import { Box, Button, Card, CardContent, CardHeader, Grid, Stack, TextField, Typ
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import "@fontsource/rubik";
-import PlaceholderPic from "../../assets/contacts-profile-placeholder.png";
 import { Save } from "@mui/icons-material";
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api";
 
 interface Contact {
   name: string
   address: string
 }
 
-export default function ContactCard({name, address}: {name: string, address: string}) {
+export default function ContactCard({ name, address, create, onSubmit }: { name: string, address: string, create?: boolean, onSubmit: (public_key: string, name: string) => void }) {
 
   let [contact, setContact] = useState<Contact>({
+    address: address,
     name: name,
-    address: address
   });
 
   return (<Card sx={{ background: "#222B3A", borderRadius: "20px" }}>
     <CardContent>
       <Stack pl={2} pr={2} spacing={2}>
-        <Stack direction="row" space-around>
+        <Stack direction="row">
           <Typography
-          sx={{ fontSize: 30, fontFamily: "Rubik" }}
-          color="text.secondary"
-        >
-          Contacts
-        </Typography>
+            sx={{ fontSize: 30, fontFamily: "Rubik" }}
+            color="text.secondary"
+          >
+            {(create ?? false) ? "Add Contact" : "Update Contact"}
+          </Typography>
 
-        <Button onClick={() => {
-          invoke("add_contact", { "name": contact.name, "stream": contact.address });
-        }}>
-          <Save></Save>
-        </Button>
+          <Button onClick={() => onSubmit(contact.address, contact.name)}>
+            <Save></Save>
+          </Button>
         </Stack>
-        
+
         <Stack direction="row" spacing={1} display="flex" alignItems="center">
           <AccountCircleIcon
             fontSize="large"
@@ -64,6 +60,7 @@ export default function ContactCard({name, address}: {name: string, address: str
             id="address-or-contact"
             label="ETH address"
             variant="outlined"
+            disabled={!create}
             size="small"
             style={{ background: "#222B3A", borderWidth: "0px" }}
             defaultValue={address}
@@ -75,6 +72,6 @@ export default function ContactCard({name, address}: {name: string, address: str
         </Stack>
       </Stack>
     </CardContent>
-  </Card>
-)
+  </Card >
+  )
 }

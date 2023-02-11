@@ -1,5 +1,5 @@
 use std::{
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     io::{Read, Write},
 };
 
@@ -11,13 +11,19 @@ use crate::error::Error;
 pub struct Config {
     pub private_key: String,
 
-    pub contacts: HashMap<String, String>,
+    pub contacts: HashMap<String, Contact>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Contact {
+    pub name: String,
+    pub files: HashSet<String>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
-            private_key: "lmao".to_string(),
+            private_key: "".to_string(),
             contacts: HashMap::default(),
         }
     }
@@ -53,10 +59,27 @@ impl Config {
         Ok(config)
     }
 
-    pub fn add_contact(&mut self, name: String, stream: String) -> Result<(), Error> {
-        self.contacts.insert(name, stream);
+    pub fn add_contact(&mut self, public_key: String, name: String) -> Result<(), Error> {
+        self.contacts.insert(
+            public_key,
+            Contact {
+                name,
+                files: HashSet::new(),
+            },
+        );
 
         self.sync()
+    }
+
+    pub fn add_file(&mut self, public_key: &str, filename: &str) -> Result<(), Error> {
+        let contact = self
+            .contacts
+            .get_mut(public_key)
+            .ok_or(Error::MissingContact)?;
+
+        contact.files.insert(filename.to_owned());
+
+        Ok(())
     }
 
     fn sync(&mut self) -> Result<(), Error> {
