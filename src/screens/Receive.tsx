@@ -19,7 +19,11 @@ export default function ReceiveScreen() {
               label="Search for an address or contact"
               variant="outlined"
               size="small"
-              style={{ background: "#222B3A", borderWidth: "0px" }}
+              style={{
+                background: "#222B3A",
+                borderWidth: "0px",
+                fontFamily: "Rubik",
+              }}
             ></TextField>
             <br></br>
             <br></br>
