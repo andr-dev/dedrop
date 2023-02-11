@@ -32,10 +32,10 @@ export default function ReceiveScreen() {
         su.unsubscribe();
       }
 
-      for (let [key, value] of contacts) {
-        if (!subscriptions.some((x) => x.streamPartId.startsWith(value))) {
-          console.log("subscribing to ", value);
-          streamrClient.subscribe({ streamId: `${value}/foo/bar` }, (payload) => {
+      for (let [privateKey, name] of contacts) {
+        if (!subscriptions.some((x) => x.streamPartId.startsWith(privateKey))) {
+          console.log("subscribing to ", privateKey);
+          streamrClient.subscribe({ streamId: `${privateKey}/foo/bar` }, (payload) => {
             console.log("payload", payload)
             invoke("save_file", { payload: JSON.stringify(payload) }).then(() => {
               console.log("saved file!");
