@@ -2,7 +2,7 @@ import { Card, CardContent, Grid, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "@fontsource/rubik";
 
-export const UserCard = () => (
+export const UserCard = ({ name }: { name: string }) => (
   <Card sx={{ background: "#222B3A", borderRadius: "20px" }}>
     <CardContent>
       <Grid container spacing={2}>
@@ -21,7 +21,7 @@ export const UserCard = () => (
             color="text.secondary"
             gutterBottom
           >
-            Matt Wong
+            {name}
           </Typography>
           <Typography
             sx={{ fontSize: 15, fontFamily: "Rubik" }}

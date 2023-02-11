@@ -3,6 +3,8 @@ import { UserCard } from "./receive/UserCard";
 import { ContactCard } from "./contacts/ContactCard";
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
+export type Contacts = Map<string, string>;
+
 export default function ContactsScreen() {
   return (
     // <Grid container columnSpacing={2}>

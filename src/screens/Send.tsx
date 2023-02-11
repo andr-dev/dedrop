@@ -13,9 +13,7 @@ import { invoke } from "@tauri-apps/api";
 import { open } from '@tauri-apps/api/dialog';
 import { appContext } from "src/context";
 import { streamPermissionToSolidityType } from "streamr-client/types/src/permission";
-
-
-type Contacts = Record<string, string>;
+import { Contacts } from "./Contacts";
 
 export default function SendScreen() {
   let [contacts, setContacts] = useState<Contacts>({} as Contacts);

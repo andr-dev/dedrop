@@ -11,6 +11,9 @@ pub enum Error {
 
     #[error("invalid config dir")]
     InvalidConfigDir,
+
+    #[error("invalid data dir")]
+    InvalidDataDir,
 }
 
 impl serde::Serialize for Error {

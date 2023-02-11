@@ -15,7 +15,7 @@ mod config;
 use config::Config;
 
 use tauri::{async_runtime::RwLock, State};
-use tokio::io::AsyncReadExt;
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
 fn main() {
     let config = Config::new().unwrap_or_else(|e| panic!("invalid config, reason: {:?}", e));
@@ -24,6 +24,7 @@ fn main() {
         .manage(RwLock::new(config))
         .invoke_handler(tauri::generate_handler![
             load_file,
+            save_file,
             get_private_key,
             filter_contacts,
             add_contact
@@ -44,6 +45,24 @@ async fn load_file(path: &str) -> Result<AirdropMessage, Error> {
     file.read_to_end(&mut contents).await?;
 
     Ok(AirdropMessage { filename, contents })
+}
+
+#[tauri::command]
+async fn save_file(payload: &str) -> Result<(), Error> {
+    let msg: AirdropMessage = serde_json::from_str(payload)?;
+
+    let msg_dir_buf = dirs::data_local_dir().ok_or(Error::InvalidConfigDir)?;
+    let msg_dir = msg_dir_buf.as_path();
+
+    std::fs::create_dir_all(msg_dir)?;
+
+    let msg_path_buf = msg_dir_buf.join(std::path::Path::new(&msg.filename));
+    let msg_path = msg_path_buf.as_path();
+
+    let mut file = tokio::fs::File::create(msg_path).await?;
+    file.write_all(&msg.contents).await?;
+
+    Ok(())
 }
 
 fn opt_os_str_to_string(opt_os_str: Option<&std::ffi::OsStr>) -> Result<String, Error> {

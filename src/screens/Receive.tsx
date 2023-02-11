@@ -1,18 +1,49 @@
-import { Container, Grid, List, TextField } from "@mui/material";
+import { Box, Container, Grid, Stack, TextField } from "@mui/material";
 import { UserCard } from "./receive/UserCard";
 import { FileCard } from "./receive/FileCard";
+import { useContext, useEffect, useState } from "react";
+import { appContext } from "src/context";
+import { invoke } from "@tauri-apps/api";
+import { Contacts } from "./Contacts";
+
 export default function ReceiveScreen() {
+  let [contacts, setContacts] = useState<string[][]>([]);
+
+  let { streamrClient } = useContext(appContext).state;
+
+  useEffect(() => {
+    invoke("filter_contacts", { "filter": "" }).then((contacts) => {
+      setContacts(Object.entries(contacts as Contacts));
+    });
+  }, []);
+
+  useEffect(() => {
+    streamrClient.getSubscriptions().then((subscriptions) => {
+      let shouldUnsubscribe = subscriptions.filter(s => s.streamPartId in contacts);
+
+      for (let su of shouldUnsubscribe) {
+        console.log("unsubscribing from ", su);
+        su.unsubscribe();
+      }
+
+      for (let [key, value] of contacts) {
+        if (!subscriptions.some((x) => x.streamPartId.startsWith(value))) {
+          console.log("subscribing to ", value);
+          streamrClient.subscribe({ streamId: `${value}/foo/bar` }, (payload) => {
+            invoke("save_file", { data: payload as string }).then(() => {
+              console.log("saved file!");
+            })
+          })
+        }
+      }
+    })
+  }, [contacts]);
+
   return (
-    <Grid container spacing={2}>
-      <Grid xs={6}>
-        <Container
-          style={{
-            height: "90%",
-            width: "80%",
-            paddingTop: "5%",
-          }}
-        >
-          <List>
+    <Grid container height="100%" width="100%" columnSpacing={4}>
+      <Grid item xs={6}>
+        <Box>
+          <Stack spacing={2}>
             <TextField
               fullWidth
               id="address-or-contact"
@@ -25,32 +56,14 @@ export default function ReceiveScreen() {
                 fontFamily: "Rubik",
               }}
             ></TextField>
-            <br></br>
-            <br></br>
-            <br></br>
-            <UserCard></UserCard>
-            <br></br>
-            <br></br>
-            <UserCard></UserCard>
-            <br></br>
-            <br></br>
-            <UserCard></UserCard>
-            <br></br>
-            <br></br>
-            <UserCard></UserCard>
-          </List>
-        </Container>
+            {contacts.map(([name, publicKey], value) => <UserCard key={publicKey} name={name} />)}
+          </Stack>
+        </Box>
       </Grid>
-      <Grid xs={6}>
-        <Container
-          style={{
-            height: "90%",
-            width: "80%",
-            paddingTop: "5%",
-          }}
-        >
-          <FileCard></FileCard>
-        </Container>
+      <Grid item xs={6}>
+        <Box>
+          <FileCard />
+        </Box>
       </Grid>
     </Grid>
   );
