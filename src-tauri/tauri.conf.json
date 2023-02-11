@@ -63,10 +63,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 540,
-        "resizable": false,
+        "height": 720,
+        "resizable": true,
         "title": "Dedrop",
-        "width": 1080
+        "width": 1280
       }
     ]
   }
