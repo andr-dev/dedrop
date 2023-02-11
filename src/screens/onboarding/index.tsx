@@ -1,7 +1,10 @@
-import { ComponentType, useEffect } from 'react';
+import { ComponentType, useState } from 'react';
 import OnboardingDone from './OnboardingDone';
 import OnboardingPrivateKey from './OnboardingPrivateKey';
 import OnboardingStart from './OnboardingStart';
+
+import { Navigate } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 interface OnboardingScreen {
 	/**
@@ -35,7 +38,24 @@ export const ONBOARDING_SCREENS: OnboardingScreen[] = [
 ];
 
 export default function OnboardingRoot() {
+	let [pageIndex, setPageIndex] = useState(0);
+
 	return (
-		<Container maxWidth="sm"></Container>
+		<Container maxWidth="sm">
+			{renderPage(pageIndex)}
+		</Container>
 	);
+}
+
+function renderPage(pageIndex: number) {
+	switch (pageIndex) {
+		case 0:
+			return <OnboardingStart />;
+		case 1:
+			return <OnboardingPrivateKey />;
+		case 2:
+			return <OnboardingDone />;
+		default:
+			return <Navigate to="overview" />;
+	}
 }
