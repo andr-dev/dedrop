@@ -1,7 +1,7 @@
 import { Box, ButtonBase, Stack, Typography } from "@mui/material";
 import React, { ReactNode } from "react";
 import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import SendIcon from "@mui/icons-material/Send";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
@@ -15,9 +15,11 @@ interface SideBarProps {
 }
 
 function SideBarItem(props: SideBarProps) {
+    let navigate = useNavigate();
+
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }} >
-            <ButtonBase sx={{ width: "100%", height: 96 }}>
+            <ButtonBase sx={{ width: "100%", height: 96 }} onClick={() => navigate(props.label.toLocaleLowerCase())}>
                 <Stack justifyContent="center" alignItems="center" gap={1}>
                     {props.icon}
                     <Typography variant="subtitle2">{props.label}</Typography>
