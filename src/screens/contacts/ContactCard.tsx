@@ -2,7 +2,7 @@ import { Box, Button, Card, CardContent, CardHeader, Grid, Stack, TextField, Typ
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import "@fontsource/rubik";
-import { Save } from "@mui/icons-material";
+import { Delete, Save } from "@mui/icons-material";
 import { useState } from "react";
 
 interface Contact {
@@ -10,7 +10,7 @@ interface Contact {
   address: string
 }
 
-export default function ContactCard({ name, address, create, onSubmit }: { name: string, address: string, create?: boolean, onSubmit: (public_key: string, name: string) => void }) {
+export default function ContactCard({ name, address, create, onSubmit, onDelete }: { name: string, address: string, create?: boolean, onSubmit: (public_key: string, name: string) => void, onDelete: (public_key: string) => void }) {
 
   let [contact, setContact] = useState<Contact>({
     address: address,
@@ -30,6 +30,10 @@ export default function ContactCard({ name, address, create, onSubmit }: { name:
 
           <Button onClick={() => onSubmit(contact.address, contact.name)}>
             <Save></Save>
+          </Button>
+
+          <Button onClick={() => onDelete(contact.address)}>
+            <Delete></Delete>
           </Button>
         </Stack>
 

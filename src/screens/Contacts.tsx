@@ -69,11 +69,19 @@ export default function ContactsScreen() {
                       setCurrentContactIdx(idx);
                     })
                   }}
+                  onDelete={(public_key) => {
+                    setCurrentContactIdx(undefined);
+                    console.log(public_key)
+                    invoke("del_contact", {"publicKey": public_key}).then(() => fetchContacts())
+                  }}
                 /> : <ContactCard
                   key="contactCreate"
                   address=""
                   name=""
                   create
+                  onDelete={(public_key) => {
+                    console.log("okkk")
+                  }}
                   onSubmit={(public_key, name) => {
                     setCurrentContactIdx(undefined);
                     invoke("add_contact", { "publicKey": public_key, "name": name }).then(() => fetchContacts());
