@@ -8,7 +8,7 @@ import { Contacts } from "./Contacts";
 
 export default function ReceiveScreen() {
   let [contacts, setContacts] = useState<string[][]>([]);
-  let [files, setFiles] = useState<string[][]>([]);
+  let [files, setFiles] = useState<any[][]>([]);
 
   let { streamrClient } = useContext(appContext).state;
 
@@ -16,6 +16,11 @@ export default function ReceiveScreen() {
     invoke("filter_contacts", { "filter": "" }).then((contacts) => {
       setContacts(Object.entries(contacts as Contacts));
     });
+
+    invoke("get_files").then((files) => {
+      console.log(files);
+      setFiles(files as any[][]);
+    })
   }, []);
 
   useEffect(() => {
@@ -59,20 +64,22 @@ export default function ReceiveScreen() {
             <TableRow>
               <TableCell>Filename</TableCell>
               <TableCell align="right">Sender</TableCell>
-              <TableCell align="right">Size</TableCell>
+              <TableCell align="center" width={64}>Size</TableCell>
+              <TableCell align="center" width={192}>Time</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {[].map((row: any) => (
+            {files.map((row: any) => (
               <TableRow
-                key={row.name}
+                key={row[1].filename}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row[1].filename}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">0x{row[0]}</TableCell>
+                <TableCell align="center">{row[1].size}</TableCell>
+                <TableCell align="center">{new Date(row[1].time).toDateString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>

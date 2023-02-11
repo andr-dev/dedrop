@@ -45,7 +45,6 @@ function SideBar() {
       >
         <Stack>
           <img style={{ margin: 16, marginTop: 8 }} src={Logo} />
-          <SideBarItem label="Login" icon={<SendIcon />} />
           <SideBarItem label="Send" icon={<SendIcon />} />
           <SideBarItem label="Receive" icon={<SystemUpdateAltIcon />} />
           <SideBarItem label="Contacts" icon={<ContactsIcon />} />

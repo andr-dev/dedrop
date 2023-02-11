@@ -14,10 +14,17 @@ pub struct Config {
     pub contacts: HashMap<String, Contact>,
 }
 
+#[derive(Serialize, Deserialize, Hash, PartialEq, Eq, Clone)]
+pub struct FileData {
+    pub filename: String,
+    pub size: u64,
+    pub time: u128,
+}
+
 #[derive(Serialize, Deserialize)]
 pub struct Contact {
     pub name: String,
-    pub files: HashSet<String>,
+    pub files: HashSet<FileData>,
 }
 
 impl Default for Config {
@@ -73,18 +80,26 @@ impl Config {
 
     pub fn del_contact(&mut self, public_key: String) -> Result<(), Error> {
         self.contacts.remove(&public_key);
+
         self.sync()
     }
 
-    pub fn add_file(&mut self, public_key: &str, filename: &str) -> Result<(), Error> {
+    pub fn add_file(&mut self, public_key: &str, filename: &str, size: u64) -> Result<(), Error> {
         let contact = self
             .contacts
             .get_mut(public_key)
             .ok_or(Error::MissingContact)?;
 
-        contact.files.insert(filename.to_owned());
+        contact.files.insert(FileData {
+            filename: filename.to_owned(),
+            size,
+            time: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_millis(),
+        });
 
-        Ok(())
+        self.sync()
     }
 
     fn sync(&mut self) -> Result<(), Error> {

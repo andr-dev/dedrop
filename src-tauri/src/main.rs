@@ -12,7 +12,7 @@ mod error;
 use error::Error;
 
 mod config;
-use config::Config;
+use config::{Config, FileData};
 
 use tauri::{async_runtime::RwLock, State};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -28,7 +28,8 @@ fn main() {
             get_private_key,
             filter_contacts,
             add_contact,
-            del_contact
+            del_contact,
+            get_files
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -56,7 +57,10 @@ async fn save_file(
 ) -> Result<(), Error> {
     let msg: AirdropMessage = serde_json::from_str(payload)?;
 
-    state.write().await.add_file(public_key, &msg.filename)?;
+    state
+        .write()
+        .await
+        .add_file(public_key, &msg.filename, msg.contents.len() as u64)?;
 
     let msg_dir_buf = dirs::download_dir()
         .ok_or(Error::InvalidConfigDir)?
@@ -111,9 +115,34 @@ async fn add_contact(
 }
 
 #[tauri::command]
-async fn del_contact(
-    state: State<'_, RwLock<Config>>,
-    public_key: String,
-) -> Result<(), Error> {
+async fn del_contact(state: State<'_, RwLock<Config>>, public_key: String) -> Result<(), Error> {
     state.write().await.del_contact(public_key)
+}
+
+#[tauri::command]
+async fn get_files(state: State<'_, RwLock<Config>>) -> Result<Vec<(String, FileData)>, ()> {
+    let mut vec: Vec<(String, FileData)> = state
+        .read()
+        .await
+        .contacts
+        .iter()
+        .flat_map(|x| {
+            x.1.files
+                .iter()
+                .map(|file| (x.0.clone(), file.to_owned()))
+                .collect::<Vec<(String, FileData)>>()
+        })
+        .collect();
+
+    vec.sort_by(|a, b| {
+        let x = a.0.cmp(&b.0);
+
+        if !x.is_eq() {
+            return x;
+        }
+
+        return a.1.time.cmp(&b.1.time);
+    });
+
+    Ok(vec)
 }
