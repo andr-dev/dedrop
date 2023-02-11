@@ -14,6 +14,8 @@ import ContactsIcon from "@mui/icons-material/Contacts";
 import SendIcon from "@mui/icons-material/Send";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import Logo from "../assets/logo.png";
+import "@fontsource/rubik";
+import { FileDrop } from "./send/FileDrop";
 
 export default function SendScreen() {
   const SideBar = () => (
@@ -88,51 +90,6 @@ export default function SendScreen() {
       </List>
     </Box>
   );
-  const FileDrop = () => (
-    <Box
-      sx={{
-        width: "1116px",
-        height: "765px",
-        backgroundColor: "#222B3A",
-        borderRadius: "20px",
-      }}
-      role="presentation"
-    >
-      <Container>
-        <Box
-          sx={{
-            height: "670px",
-            width: "720px",
-            border: "dashed",
-            borderRadius: "20px",
-          }}
-        >
-          <Button
-            variant="contained"
-            style={{
-              fontFamily: "Rubik",
-              fontWeight: "400",
-              fontSize: "20px",
-              background: "#4992FF",
-              color: "black",
-              top: "50%",
-              left: "50%",
-            }}
-          >
-            Select files to Send
-          </Button>
-        </Box>
-      </Container>
-    </Box>
-  );
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={2}>
-        <SideBar></SideBar>
-      </Grid>
-      <Grid item xs={8}>
-        <FileDrop></FileDrop>
-      </Grid>
-    </Grid>
-  );
+
+  return <FileDrop></FileDrop>;
 }
