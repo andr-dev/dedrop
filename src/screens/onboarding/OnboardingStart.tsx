@@ -10,7 +10,7 @@ export default function OnboardingStartScreen() {
         justifyContent="center"
         sx={{ height: 128, width: "100%" }}
       >
-        <img src={Logo} height="100%" />
+        <img src={Logo} height="100%" alt="Logo" />
       </Box>
       <Typography variant="h2" align="center">
         Share your files. Without limitations.
