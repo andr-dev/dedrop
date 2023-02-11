@@ -1,13 +1,12 @@
-import { Container } from "@mui/material";
-import { ComponentType, useState } from "react";
-import OnboardingDone from "./OnboardingDone";
-import OnboardingPrivateKey from "./OnboardingPrivateKey";
-import OnboardingStart from "./OnboardingStart";
+import { ComponentType, useState } from 'react';
+import OnboardingDone from './OnboardingDone';
+import OnboardingPrivateKey from './OnboardingPrivateKey';
+import OnboardingStart from './OnboardingStart';
 
-import { Navigate } from "react-router-dom";
-import { Box, Button, Container, Grid } from "@mui/material";
-import { Stack } from "@mui/system";
-import { OnboardingProgress } from "./OnboardingProgress";
+import { Navigate } from 'react-router-dom';
+import { Box, Button, Container, Grid } from '@mui/material';
+import { Stack } from '@mui/system';
+import { OnboardingProgress } from './OnboardingProgress';
 
 interface OnboardingScreen {
   /**
@@ -28,22 +27,41 @@ interface OnboardingScreen {
 export const ONBOARDING_SCREENS: OnboardingScreen[] = [
   {
     component: OnboardingStart,
-    key: "start",
+    key: 'start'
   },
   {
     component: OnboardingPrivateKey,
-    key: "private-key",
+    key: 'private-key'
   },
   {
     component: OnboardingDone,
-    key: "done",
-  },
+    key: 'done'
+  }
 ];
 
 export default function OnboardingRoot() {
   let [pageIndex, setPageIndex] = useState(0);
 
-  return <Container maxWidth="sm">{renderPage(pageIndex)}</Container>;
+  return (
+    <Container maxWidth="sm">
+      <Box display="flex" minHeight="100vh">
+        <Stack pt="25vh" width="100%">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="40vh"
+          >
+            {renderPage(pageIndex)}
+          </Box>
+          <Stack display="flex" gap={4} alignItems="center">
+            <OnboardingProgress pageIndex={pageIndex} />
+            {pageIndex == 0 ? <Button variant="contained" onClick={() => { setPageIndex(1) }}>Get Started</Button> : null}
+          </Stack>
+        </Stack>
+      </Box >
+    </Container >
+  );
 }
 
 function renderPage(pageIndex: number) {

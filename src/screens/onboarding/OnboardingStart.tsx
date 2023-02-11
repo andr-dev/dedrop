@@ -1,29 +1,12 @@
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Paper, Stack, styled, Typography } from '@mui/material';
 
 import Logo from "../../assets/logo.png";
 
 export default function OnboardingStartScreen() {
-  return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-    >
-      <Stack spacing={4} minWidth="100%">
-        <img src={Logo} />
-        <Typography variant="h2">Share your files</Typography>
-        <Typography variant="h2">without limitations</Typography>
-        <Button variant="contained">Get Started</Button>
-      </Stack>
-    </Box>
-  );
+    return (
+        <Stack spacing={4} minWidth="100%">
+            <Box display="flex" justifyContent="center" sx={{ height: 128, }} ><img src={Logo} height="100%" /></Box>
+            <Typography variant='h2' align="center">Share your files without limitations</Typography>
+        </Stack>
+    )
 }
