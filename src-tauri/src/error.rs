@@ -3,8 +3,14 @@ pub enum Error {
     #[error(transparent)]
     Io(#[from] std::io::Error),
 
+    #[error(transparent)]
+    SerdeJson(#[from] serde_json::Error),
+
     #[error("missing file stem")]
     PathMissingFileStem,
+
+    #[error("invalid config dir")]
+    InvalidConfigDir,
 }
 
 impl serde::Serialize for Error {
