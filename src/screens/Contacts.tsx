@@ -19,11 +19,8 @@ export default function ContactsScreen() {
           style={{ background: "#222B3A", borderWidth: "0px" }}
         ></TextField>
         <List style={{ maxHeight: '100%', overflow: 'auto' }}>
-          <UserCard></UserCard>
-          <UserCard></UserCard>
-          <UserCard></UserCard>
-          <UserCard></UserCard>
-          <UserCard></UserCard>
+          <UserCard name={"Matt"} />
+          <UserCard name={"Andre"} />
         </List>
       </Stack>
 
