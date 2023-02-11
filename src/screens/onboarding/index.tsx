@@ -11,7 +11,7 @@ interface OnboardingScreen {
   /**
    * React component for rendering this screen.
    */
-  component: ComponentType<Record<string, never>>;
+  component: ComponentType<any>;
   /**
    * Unique key used to record progression to this screen
    */
@@ -41,6 +41,19 @@ export const ONBOARDING_SCREENS: OnboardingScreen[] = [
 export default function OnboardingRoot() {
   let [pageIndex, setPageIndex] = useState(0);
 
+  const renderPage = (pageIndex: number) => {
+    switch (pageIndex) {
+      case 0:
+        return <OnboardingStart />;
+      case 1:
+        return <OnboardingPrivateKey incrementPage={() => setPageIndex(2)} />;
+      case 2:
+        return <OnboardingDone />;
+      default:
+        return <Navigate to="overview" />;
+    }
+  };
+
   return (
     <Container maxWidth="md">
       <Box display="flex" minHeight="100vh">
@@ -60,6 +73,7 @@ export default function OnboardingRoot() {
                 onClick={() => {
                   setPageIndex(1);
                 }}
+                size="large"
                 style={{
                   background: "#4992FF",
                   fontFamily: "Rubik",
@@ -75,17 +89,4 @@ export default function OnboardingRoot() {
       </Box>
     </Container>
   );
-}
-
-function renderPage(pageIndex: number) {
-  switch (pageIndex) {
-    case 0:
-      return <OnboardingStart />;
-    case 1:
-      return <OnboardingPrivateKey />;
-    case 2:
-      return <OnboardingDone />;
-    default:
-      return <Navigate to="overview" />;
-  }
 }
