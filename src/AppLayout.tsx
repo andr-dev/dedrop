@@ -29,7 +29,7 @@ function SideBarItem(props: SideBarProps) {
 
 function SideBar() {
     return (
-        <Box p={1} height="100%">
+        <Box width="100%" height="100%">
             <Box
                 height="100%"
                 sx={{
@@ -56,20 +56,13 @@ export function AppLayout() {
         // <React.Suspense fallback={loader}>
         <Suspense fallback={<div className="w-screen h-screen bg-app" />}>
             <div style={{ display: "flex", flexDirection: "row", width: "100vw", height: "100vh" }}>
-                <div style={{ width: 96, height: "100%" }}>
+                <div style={{ display: "flex", width: 128, height: "100%", padding: 20, paddingRight: 0 }}>
                     <SideBar />
                 </div>
-                <div style={{ flexGrow: 1 }}>
+                <div style={{ display: "flex", flexGrow: 1, padding: 20, alignItems: "center" }}>
                     <Outlet />
                 </div>
             </div>
-            {/* <Grid item xs={2}>
-                <SideBar></SideBar>
-            </Grid>
-            <Grid item xs>
-                <Outlet />
-            </Grid>
-        </Grid> */}
         </Suspense >
         // </React.Suspense>
     );
