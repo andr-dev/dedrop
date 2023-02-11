@@ -52,12 +52,12 @@ fn opt_os_str_to_string(opt_os_str: Option<&std::ffi::OsStr>) -> Result<String, 
 }
 
 #[tauri::command]
-fn get_private_key(state: tauri::State<'_, Config>) -> [u8; 32] {
+fn get_private_key(state: tauri::State<'_, Config>) -> String {
     state.private_key.clone()
 }
 
 #[tauri::command]
-fn filter_contacts(state: tauri::State<'_, Config>, filter: String) -> HashMap<String, [u8; 32]> {
+fn filter_contacts(state: tauri::State<'_, Config>, filter: String) -> HashMap<String, String> {
     state
         .contacts
         .iter()

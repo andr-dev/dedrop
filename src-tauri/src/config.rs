@@ -9,18 +9,15 @@ use crate::error::Error;
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
-    pub private_key: [u8; 32],
+    pub private_key: String,
 
-    pub contacts: HashMap<String, [u8; 32]>,
+    pub contacts: HashMap<String, String>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
-            private_key: [
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0,
-            ],
+            private_key: "lmao".to_string(),
             contacts: HashMap::default(),
         }
     }
@@ -39,7 +36,7 @@ impl Config {
 
         if !config_dir_path.exists() {
             std::fs::create_dir_all(config_dir_path)?;
-            
+
             let mut config_file = std::fs::File::create(config_file_path)?;
 
             config_file.write(serde_json::to_string(&Config::default())?.as_bytes())?;

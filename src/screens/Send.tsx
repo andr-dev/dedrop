@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,17 +11,20 @@ import "@fontsource/rubik";
 
 import { invoke } from "@tauri-apps/api";
 import { open } from '@tauri-apps/api/dialog';
-import { appDir } from '@tauri-apps/api/path';
+import { appContext } from "src/context";
+import { streamPermissionToSolidityType } from "streamr-client/types/src/permission";
 
 
 type Contacts = Record<string, string>;
 
 export default function SendScreen() {
-  let [contacts, setContacts] = useState({} as Contacts);
+  let [contacts, setContacts] = useState<Contacts>({} as Contacts);
+
+  let context = useContext(appContext);
 
   useEffect(() => {
-    invoke("filter_contacts", {"filter": ""}).then((contacts) => {
-      
+    invoke("filter_contacts", { "filter": "" }).then((contacts) => {
+
       setContacts(contacts as Contacts);
       console.log(contacts);
     });
@@ -52,16 +55,16 @@ export default function SendScreen() {
           >
             <Button variant="contained" onClick={() => {
               open({
-                directory: true,
-                multiple: true,
+                directory: false,
+                multiple: false,
               }).then((selected) => {
-                if (Array.isArray(selected)) {
-                  // user selected multiple files
-                } else if (selected === null) {
-                  // user cancelled the selection
-                } else {
-                  // user selected a single file
-                }
+                invoke("load_file", { "path": selected }).then((file) => {
+                  context.state.streamrClient.getOrCreateStream({
+                    id: '/foo/bar',
+                  }).then((stream) => {
+                    stream.publish(file).then((res) => console.log("done!", res))
+                  })
+                })
               })
             }}>Select files to Send</Button>
           </Box>
