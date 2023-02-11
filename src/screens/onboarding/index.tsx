@@ -7,7 +7,6 @@ import { Navigate } from "react-router-dom";
 import { Box, Button, Container, Grid } from "@mui/material";
 import { Stack } from "@mui/system";
 import { OnboardingProgress } from "./OnboardingProgress";
-
 interface OnboardingScreen {
   /**
    * React component for rendering this screen.
@@ -43,19 +42,14 @@ export default function OnboardingRoot() {
   let [pageIndex, setPageIndex] = useState(0);
 
   return (
-    <Container maxWidth="sm">
-      <Box display="flex" minHeight="100vh">
-        <Stack pt="25vh" width="100%">
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            height="40vh"
-          >
+    <Container>
+      <Box display="flex" height="100%">
+        <Stack pt="5vh" width="100%">
+          <Box display="flex" alignItems="center" justifyContent="center">
             {renderPage(pageIndex)}
           </Box>
+          <br></br>
           <Stack display="flex" gap={4} alignItems="center">
-            <OnboardingProgress pageIndex={pageIndex} />
             {pageIndex == 0 ? (
               <Button
                 variant="contained"
@@ -66,6 +60,7 @@ export default function OnboardingRoot() {
                 Get Started
               </Button>
             ) : null}
+            <OnboardingProgress pageIndex={pageIndex} />
           </Stack>
         </Stack>
       </Box>
