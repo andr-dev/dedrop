@@ -35,7 +35,7 @@ export default function App() {
 }
 
 function AppWrapper() {
-  let [loaded, setLoaded] = useState(true);
+  let [loaded, setLoaded] = useState(false);
   let context = useContext(appContext);
 
   useEffect(() => {
