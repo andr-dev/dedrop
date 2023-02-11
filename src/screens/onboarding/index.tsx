@@ -1,4 +1,3 @@
-import { Container } from "@mui/material";
 import { ComponentType, useState } from "react";
 import OnboardingDone from "./OnboardingDone";
 import OnboardingPrivateKey from "./OnboardingPrivateKey";

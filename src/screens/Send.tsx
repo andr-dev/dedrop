@@ -19,48 +19,66 @@ export default function SendScreen() {
   const SideBar = () => (
     <Box
       sx={{
-        width: "121px",
-        height: "933px",
+        width: "40%",
+        height: "60%",
         backgroundColor: "#222B3A",
         borderRadius: "25px",
       }}
       role="presentation"
     >
-      <List>
-        <ListItem key={"home"} disablePadding>
-          <ListItemButton>
-            <img
-              style={{ height: "35px", width: "35px" }}
-              src={Logo}
-              alt={"Logo"}
-            />
-          </ListItemButton>
+      <List style={{ textAlign: "center" }}>
+        <ListItem
+          key={"send"}
+          disablePadding
+          style={{ display: "inline-block", textAlign: "center" }}
+        >
+          <div>
+            <ListItemButton style={{ display: "block", textAlign: "center" }}>
+              <ListItemIcon style={{ display: "block" }}>
+                <img src={Logo} style={{ width: "50%" }}></img>
+              </ListItemIcon>
+            </ListItemButton>
+          </div>
         </ListItem>
         <br></br>
-        <ListItem key={"send"} disablePadding>
+        <br></br>
+        <br></br>
+        <ListItem
+          key={"send"}
+          disablePadding
+          style={{ display: "inline-block", textAlign: "center" }}
+        >
           <div>
-            <ListItemButton style={{ display: "block" }}>
-              <ListItemIcon>
+            <ListItemButton style={{ display: "block", textAlign: "center" }}>
+              <ListItemIcon style={{ display: "block" }}>
                 <SendIcon />
               </ListItemIcon>
               <ListItemText primary={"Send"} style={{ display: "block" }} />
             </ListItemButton>
           </div>
         </ListItem>
-        <ListItem key={"receive"} disablePadding>
+        <ListItem
+          key={"receive"}
+          disablePadding
+          style={{ display: "inline-block", textAlign: "center" }}
+        >
           <div>
-            <ListItemButton style={{ display: "block" }}>
-              <ListItemIcon>
+            <ListItemButton style={{ display: "block", textAlign: "center" }}>
+              <ListItemIcon style={{ display: "block" }}>
                 <SystemUpdateAltIcon />
               </ListItemIcon>
               <ListItemText primary={"Receive"} style={{ display: "block" }} />
             </ListItemButton>
           </div>
         </ListItem>
-        <ListItem key={"contacts"} disablePadding>
+        <ListItem
+          key={"contacts"}
+          disablePadding
+          style={{ display: "inline-block", textAlign: "center" }}
+        >
           <div>
-            <ListItemButton style={{ display: "block" }}>
-              <ListItemIcon>
+            <ListItemButton style={{ display: "block", textAlign: "center" }}>
+              <ListItemIcon style={{ display: "block" }}>
                 <ContactsIcon />
               </ListItemIcon>
               <ListItemText primary={"Contacts"} style={{ display: "block" }} />
@@ -89,7 +107,20 @@ export default function SendScreen() {
             borderRadius: "20px",
           }}
         >
-          <Button variant="contained">Select files to Send</Button>
+          <Button
+            variant="contained"
+            style={{
+              fontFamily: "Rubik",
+              fontWeight: "400",
+              fontSize: "20px",
+              background: "#4992FF",
+              color: "black",
+              top: "50%",
+              left: "50%",
+            }}
+          >
+            Select files to Send
+          </Button>
         </Box>
       </Container>
     </Box>
