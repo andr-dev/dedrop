@@ -17,14 +17,14 @@ export const UserCard = () => (
         </Grid>
         <Grid item xs={8} style={{ margin: "auto" }}>
           <Typography
-            sx={{ fontSize: 20, fontFamily: "Rubik" }}
+            sx={{ fontSize: 25, fontFamily: "Rubik" }}
             color="text.secondary"
             gutterBottom
           >
             Matt Wong
           </Typography>
           <Typography
-            sx={{ fontSize: 10, fontFamily: "Rubik" }}
+            sx={{ fontSize: 15, fontFamily: "Rubik" }}
             color="text.secondary"
             gutterBottom
           >
