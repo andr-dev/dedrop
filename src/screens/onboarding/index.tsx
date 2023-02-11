@@ -42,19 +42,28 @@ export default function OnboardingRoot() {
   let [pageIndex, setPageIndex] = useState(0);
 
   return (
-    <Container>
-      <Box display="flex" height="100%">
-        <Stack pt="5vh" width="100%">
-          <Box display="flex" alignItems="center" justifyContent="center">
+    <Container maxWidth="md">
+      <Box display="flex" minHeight="100vh">
+        <Stack width="100%">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="85vh"
+          >
             {renderPage(pageIndex)}
           </Box>
-          <br></br>
           <Stack display="flex" gap={4} alignItems="center">
             {pageIndex == 0 ? (
               <Button
                 variant="contained"
                 onClick={() => {
                   setPageIndex(1);
+                }}
+                style={{
+                  background: "#4992FF",
+                  fontFamily: "Rubik",
+                  borderRadius: "15px",
                 }}
               >
                 Get Started

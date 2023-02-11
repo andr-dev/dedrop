@@ -18,30 +18,27 @@ export default function OnboardingPrivateKey() {
         alignItems="center"
         justifyContent="center"
       >
-        <img
-          style={{ transform: "scale(1)", maxWidth: "100%" }}
-          src={Landing}
-          alt="landing"
-        />
+        <img style={{ width: "100%" }} src={Landing} alt="landing" />
       </Grid>
       <Grid item xs={5} display="flex" alignItems="center">
-        <Stack>
-          <img style={{ transform: "scale(.6)" }} src={Logo} alt="logo" />
+        <Stack spacing={1} width="100%">
+          <Box display="flex" justifyContent="center">
+            <img src={Logo} style={{ height: 96 }} alt="logo" />
+          </Box>
           <Typography
             variant="h3"
-            pb={2}
             style={{ textAlign: "center", fontFamily: "Rubik" }}
+            pt={4}
           >
             Airdrop
           </Typography>
           <Typography
             variant="subtitle1"
-            pb={2}
             style={{ textAlign: "center", fontFamily: "Rubik" }}
+            pb={4}
           >
             Decentralized File Sharing
           </Typography>
-          <br></br>
           <TextField
             fullWidth
             id="use-private-key"
@@ -55,14 +52,12 @@ export default function OnboardingPrivateKey() {
               fontFamily: "Rubik",
             }}
           ></TextField>
-          <br></br>
           <Typography
             variant="subtitle2"
             style={{ textAlign: "center", fontFamily: "Rubik" }}
           >
             or
           </Typography>
-          <br></br>
           <Button variant="contained" style={{ fontFamily: "Rubik" }}>
             <Typography variant="subtitle1" style={{ fontFamily: "Rubik" }}>
               Generate Private Key
