@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import "@fontsource/rubik";
 
@@ -7,8 +7,28 @@ import { open } from "@tauri-apps/api/dialog";
 import { appDir } from "@tauri-apps/api/path";
 import Logo from "../../assets/logo.png";
 import Landing from "../../assets/landing.png";
+import { appContext } from "src/context";
+import StreamrClient from "streamr-client";
 
-export default function OnboardingPrivateKey() {
+export default function OnboardingPrivateKey({
+  incrementPage,
+}: {
+  incrementPage: () => void;
+}) {
+  const generatePrivateKey = () => {
+    const key = StreamrClient.generateEthereumAccount().privateKey.substring(2);
+    // TODO: Do something with the privateKey here
+    incrementPage();
+  };
+
+  const handlePrivateKeyChange = (key: string) => {
+    const re = new RegExp("[0-9a-fA-F]{64}$");
+    if (re.test(key)) {
+      // TODO: Do something with the privateKey here
+      incrementPage();
+    }
+  };
+
   const OnboardingPrivateKey = () => (
     <Grid container spacing={2}>
       <Grid
@@ -51,6 +71,9 @@ export default function OnboardingPrivateKey() {
               borderRadius: "10px",
               fontFamily: "Rubik",
             }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              handlePrivateKeyChange(event.target.value);
+            }}
           ></TextField>
           <Typography
             variant="subtitle2"
@@ -58,7 +81,15 @@ export default function OnboardingPrivateKey() {
           >
             or
           </Typography>
-          <Button variant="contained" style={{ fontFamily: "Rubik" }}>
+          <Button
+            variant="contained"
+            style={{
+              fontFamily: "Rubik",
+              background: "#4992FF",
+              borderRadius: "15px",
+            }}
+            onClick={() => generatePrivateKey()}
+          >
             <Typography variant="subtitle1" style={{ fontFamily: "Rubik" }}>
               Generate Private Key
             </Typography>

@@ -1,7 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import Logo from "../../assets/logo.png";
 export default function OnboardingDoneScreen() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={30} maxWidth="sm">
       <Typography variant="h1" align="center">
@@ -14,8 +16,16 @@ export default function OnboardingDoneScreen() {
           fontFamily: "Rubik",
           borderRadius: "15px",
         }}
+        onClick={() => navigate("/")}
       >
-        <Typography variant="h6" style={{ fontFamily: "Rubik" }}>
+        <Typography
+          variant="h6"
+          style={{
+            fontFamily: "Rubik",
+            borderRadius: "15px",
+            background: "#4992FF",
+          }}
+        >
           Start
         </Typography>
       </Button>
