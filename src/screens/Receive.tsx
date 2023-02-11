@@ -32,12 +32,12 @@ export default function ReceiveScreen() {
         su.unsubscribe();
       }
 
-      for (let [privateKey, name] of contacts) {
-        if (!subscriptions.some((x) => x.streamPartId.startsWith(privateKey))) {
-          console.log("subscribing to ", privateKey);
-          streamrClient.subscribe({ streamId: `${privateKey}/foo/bar` }, (payload) => {
+      for (let [publicKey, name] of contacts) {
+        if (!subscriptions.some((x) => x.streamPartId.startsWith(publicKey))) {
+          console.log("subscribing to ", publicKey);
+          streamrClient.subscribe({ streamId: `${publicKey}/foo/bar` }, (payload) => {
             console.log("payload", payload)
-            invoke("save_file", { payload: JSON.stringify(payload) }).then(() => {
+            invoke("save_file", { publicKey: publicKey, payload: JSON.stringify(payload) }).then(() => {
               console.log("saved file!");
             })
           })
@@ -77,7 +77,7 @@ export default function ReceiveScreen() {
                 <TableCell component="th" scope="row">
                   {row[1].filename}
                 </TableCell>
-                <TableCell align="right">0x{row[0]}</TableCell>
+                <TableCell align="right">{row[0]}</TableCell>
                 <TableCell align="center">{row[1].size}</TableCell>
                 <TableCell align="center">{new Date(row[1].time).toDateString()}</TableCell>
               </TableRow>

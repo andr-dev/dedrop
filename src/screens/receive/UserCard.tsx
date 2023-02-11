@@ -21,7 +21,7 @@ export const UserCard = ({ name, publicKey }: { name: string, publicKey: string 
         sx={{ fontSize: 15, fontFamily: "Rubik" }}
         color="text.secondary"
       >
-        0x{publicKey}
+        {publicKey}
       </Typography>
     </Stack>
   </Box>
