@@ -14,17 +14,19 @@ use error::Error;
 mod config;
 use config::Config;
 
+use tauri::{async_runtime::RwLock, State};
 use tokio::io::AsyncReadExt;
 
 fn main() {
     let config = Config::new().unwrap_or_else(|e| panic!("invalid config, reason: {:?}", e));
 
     tauri::Builder::default()
-        .manage(config)
+        .manage(RwLock::new(config))
         .invoke_handler(tauri::generate_handler![
             load_file,
             get_private_key,
-            filter_contacts
+            filter_contacts,
+            add_contact
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -52,16 +54,30 @@ fn opt_os_str_to_string(opt_os_str: Option<&std::ffi::OsStr>) -> Result<String, 
 }
 
 #[tauri::command]
-fn get_private_key(state: tauri::State<'_, Config>) -> [u8; 32] {
-    state.private_key.clone()
+async fn get_private_key(state: State<'_, RwLock<Config>>) -> Result<String, Error> {
+    Ok(state.read().await.private_key.clone())
 }
 
 #[tauri::command]
-fn filter_contacts(state: tauri::State<'_, Config>, filter: String) -> HashMap<String, [u8; 32]> {
-    state
+async fn filter_contacts(
+    state: State<'_, RwLock<Config>>,
+    filter: String,
+) -> Result<HashMap<String, String>, Error> {
+    Ok(state
+        .read()
+        .await
         .contacts
         .iter()
         .filter(|(key, _)| key.contains(&filter))
         .map(|(key, value)| (key.clone(), value.clone()))
-        .collect()
+        .collect())
+}
+
+#[tauri::command]
+async fn add_contact(
+    state: State<'_, RwLock<Config>>,
+    name: String,
+    stream: String,
+) -> Result<(), Error> {
+    state.write().await.add_contact(name, stream)
 }

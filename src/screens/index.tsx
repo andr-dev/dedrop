@@ -5,15 +5,15 @@ import Send from "./Send";
 import ShareSettings from "./ShareSettings";
 
 const routes: RouteProps[] = [
-  {
-    index: true,
-    element: <Navigate to="overview" relative="route" />,
-  },
-  { path: "overview", element: Overview() },
-  { path: "send", element: Send() },
-  { path: "receive", element: Receive() },
-  { path: 'contacts', element: Contacts() }
-  { path: "share-settings", element: ShareSettings() },
+    {
+        index: true,
+        element: <Navigate to="overview" relative="route" />
+    },
+    { path: 'overview', element: <Overview /> },
+    { path: 'send', element: <Send /> },
+    { path: 'receive', element: <Receive /> },
+    { path: 'contacts', element: <Contacts /> },
+    { path: 'share-settings', element: <ShareSettings/> }
 ];
 
 export default (
