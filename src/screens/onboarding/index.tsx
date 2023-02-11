@@ -4,7 +4,9 @@ import OnboardingPrivateKey from './OnboardingPrivateKey';
 import OnboardingStart from './OnboardingStart';
 
 import { Navigate } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Box, Button, Container, Grid } from '@mui/material';
+import { Stack } from '@mui/system';
+import { OnboardingProgress } from './OnboardingProgress';
 
 interface OnboardingScreen {
 	/**
@@ -42,8 +44,23 @@ export default function OnboardingRoot() {
 
 	return (
 		<Container maxWidth="sm">
-			{renderPage(pageIndex)}
-		</Container>
+			<Box display="flex" minHeight="100vh">
+				<Stack pt="25vh" width="100%">
+					<Box
+						display="flex"
+						alignItems="center"
+						justifyContent="center"
+						height="40vh"
+					>
+						{renderPage(pageIndex)}
+					</Box>
+					<Stack display="flex" gap={4} alignItems="center">
+						<OnboardingProgress pageIndex={pageIndex} />
+						{pageIndex == 0 ? <Button variant="contained" onClick={() => { setPageIndex(1) }}>Get Started</Button> : null}
+					</Stack>
+				</Stack>
+			</Box >
+		</Container >
 	);
 }
 
