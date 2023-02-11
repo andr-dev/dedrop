@@ -2,6 +2,8 @@ import { Navigate, Route, RouteProps } from "react-router-dom";
 import Overview from "./Overview";
 import Receive from "./Receive";
 import Send from "./Send";
+import ShareSettings from "./ShareSettings";
+
 import Contacts from "./Contacts";
 
 const routes: RouteProps[] = [
@@ -13,6 +15,7 @@ const routes: RouteProps[] = [
   { path: "send", element: <Send /> },
   { path: "receive", element: <Receive /> },
   { path: "contacts", element: <Contacts /> },
+  { path: 'share-settings', element: <ShareSettings/> }
 ];
 
 export default (
