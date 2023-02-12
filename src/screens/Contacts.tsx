@@ -34,16 +34,16 @@ export default function ContactsScreen() {
             size="small"
             style={{ background: "#222B3A", borderWidth: "0px" }}
           ></TextField>
-          <Button onClick={() => {
+          <Button key="setCurrentButton" onClick={() => {
             setCurrentContactIdx(currentContactIdx === null ? undefined : null)
           }}>
-            <AddCircle></AddCircle>
+            <AddCircle />
           </Button>
         </Stack>
 
         <List style={{ maxHeight: '600px', overflow: 'auto' }}>
           {contacts.map(([publicKey, name], value) => (
-            <ListItem style={{ padding: 0 }}><Button key={publicKey} onClick={() => {
+            <ListItem key={`${publicKey}item`} style={{ padding: 0 }}><Button key={publicKey} onClick={() => {
               setCurrentContactIdx(value);
             }} fullWidth>
               <UserCard name={name} publicKey={publicKey} />
