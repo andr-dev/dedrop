@@ -36,7 +36,7 @@ fn main() {
 }
 
 #[tauri::command]
-async fn load_file(path: &str) -> Result<DedropMessage, Error> {
+async fn load_file(path: &str) -> Result<String, Error> {
     let path = std::path::Path::new(path);
 
     let filename = opt_os_str_to_string(path.file_name())?;
@@ -46,7 +46,10 @@ async fn load_file(path: &str) -> Result<DedropMessage, Error> {
     let mut contents = vec![];
     file.read_to_end(&mut contents).await?;
 
-    Ok(DedropMessage { filename, contents })
+    Ok(serde_json::to_string(&DedropMessage {
+        filename,
+        contents: base64::encode(contents),
+    })?)
 }
 
 #[tauri::command]
@@ -55,12 +58,14 @@ async fn save_file(
     public_key: &str,
     payload: &str,
 ) -> Result<(), Error> {
-    let msg: DedropMessage = serde_json::from_str(payload)?;
+    let msg: DedropMessage = serde_json::from_str(payload).unwrap();
+
+    let contents = base64::decode(msg.contents).unwrap();
 
     state
         .write()
         .await
-        .add_file(public_key, &msg.filename, msg.contents.len() as u64)?;
+        .add_file(public_key, &msg.filename, contents.len() as u64)?;
 
     let msg_dir_buf = dirs::download_dir()
         .ok_or(Error::InvalidConfigDir)?
@@ -73,7 +78,7 @@ async fn save_file(
     let msg_path = msg_path_buf.as_path();
 
     let mut file = tokio::fs::File::create(msg_path).await?;
-    file.write_all(&msg.contents).await?;
+    file.write_all(&contents).await?;
 
     Ok(())
 }

@@ -14,7 +14,6 @@ export default function ContactsScreen() {
 
   const fetchContacts = () => {
     return invoke("filter_contacts", { "filter": "" }).then((val) => {
-      console.log("got contacts", val);
       setContacts(Object.entries(val as Contacts));
     });
   }
@@ -37,7 +36,6 @@ export default function ContactsScreen() {
           ></TextField>
           <Button onClick={() => {
             setCurrentContactIdx(currentContactIdx === null ? undefined : null)
-            console.log(currentContactIdx)
           }}>
             <AddCircle></AddCircle>
           </Button>
@@ -71,8 +69,7 @@ export default function ContactsScreen() {
                   }}
                   onDelete={(public_key) => {
                     setCurrentContactIdx(undefined);
-                    console.log(public_key)
-                    invoke("del_contact", {"publicKey": public_key}).then(() => fetchContacts())
+                    invoke("del_contact", { "publicKey": public_key }).then(() => fetchContacts())
                   }}
                 /> : <ContactCard
                   key="contactCreate"
@@ -80,7 +77,6 @@ export default function ContactsScreen() {
                   name=""
                   create
                   onDelete={(public_key) => {
-                    console.log("okkk")
                   }}
                   onSubmit={(public_key, name) => {
                     setCurrentContactIdx(undefined);

@@ -20,7 +20,6 @@ export const appReducer: React.Reducer<AppState, AppAction> = (
   action
 ) => {
   if (action.type === "SetStreamrClient") {
-    console.log("updating streamr client!");
     return {
       streamrClient: action.payload,
     };

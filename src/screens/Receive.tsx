@@ -14,7 +14,6 @@ export default function ReceiveScreen() {
 
   const updateFiles = () => {
     invoke("get_files").then((files) => {
-      console.log(files);
       setFiles(files as any[][]);
     })
   }
@@ -41,7 +40,7 @@ export default function ReceiveScreen() {
           console.log("subscribing to ", publicKey);
           streamrClient.subscribe({ streamId: `${publicKey}/dedrop` }, (payload) => {
             console.log("payload", payload)
-            invoke("save_file", { publicKey: publicKey, payload: JSON.stringify(payload) }).then(() => {
+            invoke("save_file", { publicKey: publicKey, payload: payload }).then(() => {
               console.log("saved file!");
               updateFiles();
             })

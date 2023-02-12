@@ -27,7 +27,7 @@ export default function SendScreen() {
 
   const handleClick = (res: any) => {
     setSuccessSendToastOpen(true);
-    const message = `Successfully sent ${res.content.contents.length} bytes to stream ${res.streamId}`;
+    const message = `Successfully sent ${res.content.length} bytes to stream ${res.streamId}`;
     setSuccessToastMessage(message);
   };
 
@@ -61,7 +61,6 @@ export default function SendScreen() {
   useEffect(() => {
     invoke("filter_contacts", { filter: "" }).then((contacts) => {
       setContacts(contacts as Contacts);
-      console.log(contacts);
     });
   }, []);
 

@@ -21,6 +21,7 @@ tauri = { version = "1.2.4", features = ["dialog-confirm", "dialog-open"] }
 thiserror = "=1.0.38"
 tokio = "=1.25.0"
 dirs = "=4.0.0"
+base64 = "=0.21.0"
 
 [features]
 # by default Tauri runs in production mode
