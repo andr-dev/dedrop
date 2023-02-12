@@ -126,9 +126,9 @@ export default function SendScreen() {
               Simple, private & decentralized
             </Typography>
             <Typography variant="h6">
-              Dedrop let's you share files with end-to-end entryption so you
-              can keep what you share private and make sure your stuff doesn't
-              stay online forever.
+              Dedrop let's you share files with end-to-end encryption so you can
+              keep what you share private and make sure your stuff doesn't stay
+              online forever.
             </Typography>
           </Stack>
         </Grid>
