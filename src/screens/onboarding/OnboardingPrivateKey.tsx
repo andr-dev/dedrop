@@ -5,7 +5,7 @@ import "@fontsource/rubik";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { appDir } from "@tauri-apps/api/path";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.svg";
 import Landing from "../../assets/landing.png";
 import { appContext } from "src/context";
 import StreamrClient from "streamr-client";

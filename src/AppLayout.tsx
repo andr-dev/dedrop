@@ -32,7 +32,6 @@ function SideBarItem(props: SideBarProps) {
 }
 
 function SideBar() {
-
   return (
     <Box width="100%" height="100%">
       <Box
@@ -44,7 +43,7 @@ function SideBar() {
         role="presentation"
       >
         <Stack>
-          <img style={{ margin: 16, marginTop: 8 }} src={Logo} />
+          <img style={{ margin: 16 }} src={Logo} />
           <SideBarItem label="Send" icon={<SendIcon />} />
           <SideBarItem label="Receive" icon={<SystemUpdateAltIcon />} />
           <SideBarItem label="Contacts" icon={<ContactsIcon />} />

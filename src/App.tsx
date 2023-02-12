@@ -58,7 +58,7 @@ function AppWrapper() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="onboarding" element={<OnboardingRoot />}>
+        <Route element={<OnboardingRoot />}>
           <Route index element={<Navigate to="start" />} />
 
           {ONBOARDING_SCREENS.map(

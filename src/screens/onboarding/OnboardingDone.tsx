@@ -16,7 +16,7 @@ export default function OnboardingDoneScreen() {
           fontFamily: "Rubik",
           borderRadius: "15px",
         }}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/send")}
       >
         <Typography
           variant="h6"
